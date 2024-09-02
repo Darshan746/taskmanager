@@ -1,0 +1,7 @@
+package com.encora.taskmanager.exceptionHandlers;
+
+public class TaskNotFoundException extends RuntimeException{
+    public TaskNotFoundException(String message) {
+        super(message);
+    }
+}
