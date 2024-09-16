@@ -5,16 +5,24 @@ import com.encora.taskmanager.dao.UserDao;
 import com.encora.taskmanager.dto.request.TaskPatchRequest;
 import com.encora.taskmanager.entity.Task;
 import com.encora.taskmanager.entity.User;
+import com.encora.taskmanager.enumconstants.TaskStatus;
 import com.encora.taskmanager.exceptionHandlers.TaskDeleteException;
 import com.encora.taskmanager.exceptionHandlers.TaskNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
+
+
 
     @Autowired
     private TaskDao taskDao;
@@ -79,5 +87,32 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    @Override
+    public Page<Task> findAllTaskByUserId(long userId, int page, int size) {
+        return taskDao.findByUserId(userId, PageRequest.of(page, size));
+    }
 
+    @Override
+    public List<Task> getTaskByDueDateAndUser(LocalDate localDate, User user) {
+        return taskDao.findByTaskDueDateAndusr(localDate,user);
+    }
+
+    @Override
+    public Task getTaskByTaskId(long taskId) {
+        Optional<Task> optionalTask = taskDao.findById(taskId);
+        if (optionalTask.isPresent()){
+            return optionalTask.get();
+        }else {
+            throw new TaskNotFoundException("task with id "+taskId+" "+"doesn't exist");
+        }
+    }
+
+    @Override
+    public Page<Task> findAllTaskByUserId(long userId, int page, int size, TaskStatus taskStatus, String sortBy) {
+        if (taskStatus != null) {
+            return taskDao.findByUserIdAndTaskStatus(userId, taskStatus, PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortBy), "taskDueDate")));
+        } else {
+            return taskDao.findByUserId(userId, PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortBy), "taskDueDate")));
+        }
+    }
 }

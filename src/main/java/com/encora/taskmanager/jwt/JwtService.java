@@ -35,7 +35,7 @@ public class JwtService {
                 .compact();
     }
 
-    private SecretKey generateSecretKey() {
+    public SecretKey generateSecretKey() {
         final byte[] bytes = Base64.getDecoder().decode(StringConstants.JWT_SECRET);
         return Keys.hmacShaKeyFor(bytes);
     }
@@ -50,7 +50,7 @@ public class JwtService {
         return claims.getExpiration().after(Date.from(Instant.now()));
     }
 
-    private Claims getClaims(final String jwtToken) {
+    public Claims getClaims(final String jwtToken) {
         return Jwts.parser()
                 .verifyWith(generateSecretKey())
                 .build()

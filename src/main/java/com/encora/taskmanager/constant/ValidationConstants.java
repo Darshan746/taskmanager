@@ -27,7 +27,6 @@ public class ValidationConstants {
     public static final String TASK_DESCRIPTION_SHOULD_NOT_BE_EMPTY = "Task description should not be empty";
     public static final String TASK_DESCRIPTION_SHOULD_NOT_BE_NULL = "Task description should not be empty";
     public static final String TASK_DUE_DATE_SHOULD_NOT_BE_NULL="Task due date should not be null";
-    public static final String TASK_DUE_DATE_SHOULD_NOT_BE_EMPTY="Task due date should not be empty";
     public static final String TASK_TITLE_MUST_BE_BETWEEN_5_AND_500_CHARACTERS = "Task title must be between 5 to 500 character";
     public static final String TASK_DESCRIPTION_MUST_BE_BETWEEN_10_AND_1000_CHARACTERS = "Task description must be between 10 to 1000 character";
 

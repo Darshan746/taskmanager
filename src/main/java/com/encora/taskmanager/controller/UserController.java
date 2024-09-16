@@ -9,7 +9,9 @@ import com.encora.taskmanager.response.ApiResponse;
 import com.encora.taskmanager.response.TokenResponse;
 import com.encora.taskmanager.security.UserDetailServiceImpl;
 import com.encora.taskmanager.service.UserService;
+
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +42,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/users/signup")
+    @PostMapping(value = " /api/auth/signup")
     public ResponseEntity<ApiResponse<String>> userSignUp(final @Valid @RequestBody UserSignUpRequest userSignUpRequest) {
         final User user = entityConverterDTO.convertUserRequestToUserEntity(userSignUpRequest);
         final User createdUser = userService.createUser(user);
