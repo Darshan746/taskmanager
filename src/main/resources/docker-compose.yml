@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:8.0 # Use a specific MySQL version (e.g., 5.7, 8.0)
+    restart: always
+    environment:
+      MYSQL_DATABASE: taskmanager
+      MYSQL_USER: root
+      MYSQL_PASSWORD: tiger
+      MYSQL_ROOT_PASSWORD: tiger # Set root password for initial setup
+    ports:
+      - "3306:3306" # Expose MySQL port if needed for external access
+
+  taskmanager-app:
+    build: . # Build the current directory (where your Dockerfile is)
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db # Start the database container before the application
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/taskmanager?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: tiger
